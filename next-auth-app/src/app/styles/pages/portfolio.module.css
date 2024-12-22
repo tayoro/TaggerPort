@@ -1,0 +1,38 @@
+
+/*1285px*/
+@media only screen and (min-width: 700px){
+    .portfolio{
+        width:80%;
+    }
+    .card_portfolio{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        /* padding-left: min(150px, 10%); */
+        padding-left: clamp(5px, 8%, 150px);
+    }
+}
+
+
+@media only screen and (min-width: 1015px){
+    .portfolio{
+        width:90%;
+    }
+    .card_portfolio{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        padding-left: clamp(2px, 3%, 250px);
+    }
+}
+
+
+@media only screen and (min-width: 1280px){
+    .portfolio{
+        width: 300px;
+    }
+    .card_portfolio{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        padding-left: clamp(2px, 1%, 250px);
+    }
+}
+

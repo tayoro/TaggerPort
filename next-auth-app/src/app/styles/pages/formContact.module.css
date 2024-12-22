@@ -1,0 +1,23 @@
+
+
+
+.name { grid-area: name; }
+.email { grid-area: email; }
+.sujet { grid-area: sujet; }
+.message { grid-area: message; }
+.button { grid-area: button; }
+
+.formCont{
+    /* display: grid; 
+    grid-template-areas: 
+    "name . email "
+    "sujet sujet sujet "
+    "message message message "
+    ". button ."
+
+   ; */
+
+    /* display: grid;
+    grid-template-columns: repeat(2, 1fr); */
+    
+}
