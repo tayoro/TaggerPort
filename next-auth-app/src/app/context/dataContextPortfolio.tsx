@@ -60,16 +60,13 @@ export const PortfoliosProvider: React.FC<{children: React.ReactDOM}> = ({childr
     //Fonction pour la CREATE(ajouter un membre dans la BDD)
     const addPortfolio = async (portfoliosData:Omit<DataPortfolioType, "id"> & {image: string} & {numero: any}) => {
             try {
-                    //requete pour acceder a la collection members
+                //requete pour acceder a la collection members
                 const docRef = await addDoc(collection(db, "portfolios"),  {...portfoliosData, date: serverTimestamp()});
                 //Nouveau membre
                 const newContact: DataPortfolioType = {id: docRef.id, ...portfoliosData}
-
-                
                 //Modification du state
                 setPortfolios([...portfolios, newContact])
                 toast.success(`Telechargement de image ${portfoliosData.numero} reussi`)
-                
                 
             }catch(error){
                 console.log("erreur Lors de la creeation", error)
@@ -87,7 +84,6 @@ export const PortfoliosProvider: React.FC<{children: React.ReactDOM}> = ({childr
                     updateElementList.push(portfolios?.[i])
                 }
             }
-
             for(let j=0; j < updateElementList.length; j++){
                 const memberRef = doc(db, "portfolios", updateElementList?.[j].id);
                 await updateDoc(memberRef, portfolio)
@@ -127,6 +123,7 @@ export const PortfoliosProvider: React.FC<{children: React.ReactDOM}> = ({childr
         }
     }
 
+
     const deletePortfolioMultiple = async (titre: any) => {
         try {
             const listeDelete =[]
@@ -139,6 +136,34 @@ export const PortfoliosProvider: React.FC<{children: React.ReactDOM}> = ({childr
             const promises = listeDelete.map((docId) => deleteDoc(doc(db, "portfolios", docId)))
             await Promise.all(promises)
                 
+        }catch(error){
+            console.log("erreur Lors de la suppression", error)
+        }
+    }
+    const deleteAllportfolio = async () =>{
+        try {
+            const promises = portfolios.map((docId) => deleteDoc(doc(db, "portfolios", docId.id)))
+            await Promise.all(promises)
+        }catch(error){
+            console.log("erreur Lors de la suppression", error)
+        }
+    }
+
+
+    const deleteSelectePortfolio = async (listeSelecteDelete: string[]) =>{
+        try {   
+            const listeADelete: any[] =[]
+            listeSelecteDelete.forEach(item => {
+                portfolios.forEach(portfo => {
+                    if(portfo.titre === item){
+                        listeADelete.push(portfo.id)
+                    }
+                })
+            })
+            console.log(listeADelete)
+            const promises = listeADelete.map((docId) => deleteDoc(doc(db, "portfolios", docId)))
+            await Promise.all(promises)
+            
         }catch(error){
             console.log("erreur Lors de la suppression", error)
         }
@@ -177,6 +202,8 @@ export const PortfoliosProvider: React.FC<{children: React.ReactDOM}> = ({childr
         updatePortfolio,
         deletePortfolio,
         deletePortfolioMultiple,
+        deleteAllportfolio,
+        deleteSelectePortfolio,
         addImagePortfolio,
     }
 

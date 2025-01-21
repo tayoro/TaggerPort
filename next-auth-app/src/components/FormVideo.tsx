@@ -73,7 +73,8 @@ export default function FormVideo({openModal, isUpdate, onClose, video}: ModalTy
                 const videoRef = ref(storage, `videos/${fileVideo.name}`)
                 //Pour envoyer l'image
                 const uploadTask = uploadBytesResumable(videoRef, fileVideo)
-                //Telecharger l'image
+                
+                //Telecharger la video
                 videoUrl = await getDownloadURL(videoRef)
 
                 uploadTask.on(
@@ -83,7 +84,6 @@ export default function FormVideo({openModal, isUpdate, onClose, video}: ModalTy
                             (snapshot.bytesTransferred / snapshot.totalBytes) * 100  
                         );
                         setProgress(prog);
-                        
                     },
                     (error: any) => console.log(error),
                     () => {
@@ -126,7 +126,7 @@ export default function FormVideo({openModal, isUpdate, onClose, video}: ModalTy
         <div>
             {openModal && (
                 <div className="absolute top-0 left-0 z-40 grid h-screen w-full place-items-center backdrop-blur">
-                    <div className="max-x-[700px] relative z-50 m-auto min-h-[200px] bg-white p-4 shadow-lg border border-gray-800 rounded-md">
+                    <div className="max-w-[300px] sm:max-w-[700px] relative z-50 m-auto min-h-[200px] bg-white p-4 shadow-lg border border-gray-800 rounded-md">
                         <div className="flex justify-end">
                             <IoIosClose className="self-end text-2xl cursor-pointer" onClick={onClose}/>
                         </div>
@@ -149,6 +149,7 @@ export default function FormVideo({openModal, isUpdate, onClose, video}: ModalTy
                             </form>
 
                         <div className={`"hidden"` }><progress value={progress} max="100" /> {progress}%</div>
+                    
                     </div>
                 </div>
             )}

@@ -7,11 +7,12 @@ import { IoIosAddCircle } from 'react-icons/io'
 import useModal from '@/app/hooks/useModal'
 import NoSsr from '@/components/NoSsr'
 import FormInfo from '@/components/FormInfo'
-
+import { toast } from 'react-toastify';
 import { useContext } from 'react';
 import { useFireBaseInfo } from '@/app/context/dataContextInfo'
 import Info from '@/components/Info'
-
+import { useState,useEffect } from 'react';
+import { MdDelete } from "react-icons/md";
 
 
 export default async function NewPage() {
@@ -19,7 +20,20 @@ export default async function NewPage() {
  
     const {openModal, onOpen, onClose} = useModal()
 
-    const {infos} = useFireBaseInfo()
+    const {infos, deleteAllinfo} = useFireBaseInfo()
+
+    const [active, setActive] = useState(true)
+
+    useEffect(()=>{
+        if(infos.length < 1){
+            setActive(true)
+        }
+        else{
+            setActive(false)
+        }
+
+       
+    },[infos])
     
     return (
         <div >
@@ -35,6 +49,17 @@ export default async function NewPage() {
                             <div className='absolute right-4 bottom-4'>
                                 <IoIosAddCircle onClick={onOpen} className="text-[#172EFB] w-[50px] h-[50px] cursor-pointer hover:scale-[1.5]"/>
                             </div>
+                        </div>
+                        
+                        <div className=" w-[100%] py-5 px-6">
+                            <button type="button" onClick={ async() => {
+                                    var resultat = confirm("Voulez vous supprimer toutes les informations ?")
+                                    if(resultat === true ){
+                                        deleteAllinfo()
+                                        toast.success("Informations supprimées")
+                                    }
+                                }} 
+                            className={`bg-red-400 hover:bg-red-800 flex items-center justify-center px-2 rounded-md  ${active ? "opacity-5" : "opacity-[1]"}`} disabled={active}> Tous supprimer <MdDelete className='text-red-600'/></button>
                         </div>
 
                         <div className=" overflow-hidden overflow-y-scroll h-[calc(100%-70px)] bg-[#F2F2F2]">{/* overflow-hidden overflow-y-scroll h-[765px] */}

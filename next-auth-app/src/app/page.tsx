@@ -310,8 +310,8 @@ export default function HomePage() {
         <div className="h-[60px] flex justify-center items-center text-[30px] ">
           <span className="text-black">Service</span>
         </div>
-        <div className={` h-[calc(100%-100px)]  shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] flex justify-center items-center mx-[40px] flex-col gap-3`}>
-          <div className="lg:px-[120px] px-4 text-black">
+        <div className={` h-[calc(100%-100px)]  shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] flex justify-center items-center mx-[40px] flex-col gap-3 `}>
+          <div className=" text-black ">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque est doloribus officia excepturi nesciunt dolorum ipsum sint, tempore possimus veritatis error. Ut animi, corrupti ad quis distinctio voluptatibus aperiam enim?
           </div>
 
@@ -380,7 +380,7 @@ export default function HomePage() {
       </section>
 
 {/* --------------------------------------------------------------------------------------- */}
-      <section id="portfolio" className="bg-[#efd9b0] portfolio pb-4 lg:h-screen my-4 xl:my-0">
+      <section id="portfolio" className="bg-[#efd9b0] portfolio pb-4 lg:h-screen my-4 xl:my-0 ">
           <div className="h-[60px] flex justify-center items-center text-[30px] ">
               <span>Portfolio</span>
           </div>
@@ -394,11 +394,11 @@ export default function HomePage() {
             </div> 
           </div> */}
 
-          <div className="h-[calc(100%-60px)] flex flex-col items-center  mx-[40px] ">
-            <div className="lg:px-[120px]">
+          <div className="h-[calc(100%-60px)] flex flex-col items-center mx-[40px] ">
+            <div className=" ">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque est doloribus officia excepturi nesciunt dolorum ipsum sint, tempore possimus veritatis error. Ut animi, corrupti ad quis distinctio voluptatibus aperiam enim?
             </div>
-            <div className="h-[100%] w-[100%] mt-5 lg:px-[80px]">
+            <div className="h-[100%] w-[100%] mt-5 lg:px-[80px] ">
               <EmblaCarousel slides={newPortfoliosTri} options={OPTIONS} />
             </div>
           </div>
@@ -414,7 +414,7 @@ export default function HomePage() {
                 <SearchBar search={search} SetSearch={SetSearch} /> 
             </div>
             <div className={`shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] xl:shadow-none  relative overflow-hidden overflow-y-scroll h-[calc(100%-130px)] `}>{/* overflow-hidden overflow-y-scroll h-[765px] */}
-                <div className={`${styles.card_video} flex pt-[20px] flex-wrap bg-[#F2F2F2] justify-center sm:justify-start`}> 
+                <div className={`${styles.card_video} flex pt-[20px] flex-wrap bg-[#F2F2F2] md:h-[100%] justify-center sm:justify-start`}> 
                     {visibleVideos.map((video)=>(
                         <Video key={video.id} video={video}/>
                     ))}
@@ -428,8 +428,8 @@ export default function HomePage() {
         <div className="h-[60px] flex justify-center items-center text-[30px]">
             <span>Contacts</span>
         </div>
-        <div className="xl:h-[calc(100%-60px)] flex flex-col justify-center gap-3">
-              <div className="lg:px-[120px] px-4">
+        <div className="xl:h-[calc(100%-60px)] flex flex-col justify-center gap-3 mx-[40px] ">
+              <div className="">
                   <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil sit aliquid earum odio incidunt nostrum expedita amet dolorum. Autem quidem voluptatum excepturi ex similique eveniet quia voluptas ad laboriosam. Totam.</span>
               </div>
               <div className="">

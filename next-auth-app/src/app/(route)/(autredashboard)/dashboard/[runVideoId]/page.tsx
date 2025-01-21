@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import FormVideo from '@/components/FormVideo';
 import { DataType } from '@/app/Types/useTypes';
 import {useSession} from "next-auth/react"
+import styles from "@/app/styles/pages/video.module.css"
 
 export default function RunVideo({params}: { 
   params : {runVideoId: string;}
@@ -18,12 +19,13 @@ export default function RunVideo({params}: {
   const {onOpen, openModal, onClose} = useModal()
 
   return (
-    <div className='px-[300px] py-[20px] '>
+    <div className=' py-[20px] flex justify-center  px-[20px] sm:px-[40px]  lg:px-[220px]'>
+      <div>
       {videos.map((video)=>(
-            <div key={video.id}>
+            <div  className={` `} >
               {video.titre.replaceAll(" ", "-") === params.runVideoId && (<>
-                <div className='bg-blue-700 h-[450px] rounded-lg '>
-                    <video autoPlay controls loop muted src={video.video} className='w-[100%] h-[100%] object-cover cursor-pointer rounded-lg'/>
+                <div className={`${styles.cadreLecteur} bg-black rounded-[15px] `}>
+                    <video autoPlay controls loop muted src={video.video} className='w-[100%] h-full object-cover cursor-pointer rounded-lg '/>
                 </div>
                 <div className='titre my-3'>
                     <span className='font-bold'>{video.titre}</span>
@@ -53,7 +55,7 @@ export default function RunVideo({params}: {
         
             </div>
             ))} 
-      
+      </div> 
     </div>
   )
 }

@@ -90,11 +90,20 @@ export const ContactProvider: React.FC<{children: React.ReactDOM}> = ({children}
         }
     }
 
+    const deleteAllcontact = async () =>{
+        try {
+            const promises = contacts.map((docId) => deleteDoc(doc(db, "contacts", docId.id)))
+            await Promise.all(promises)
+        }catch(error){
+            console.log("erreur Lors de la suppression", error)
+        }
+    }
 
     const value = {
         contacts,
         addContact,
         deleteContact,
+        deleteAllcontact,
     }
 
     return <DataContextContact.Provider value={value}>{children}</DataContextContact.Provider>

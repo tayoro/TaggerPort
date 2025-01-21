@@ -48,12 +48,12 @@ export default function Sidebar() {
 
     <>
             <div onClick={toggleDrawer} className='absolute top-2 right-4 h-16 w-16 grid place-items-center rounded-[50%] hover:scale-[1.5] '><TiThMenu className='text-[30px]' /></div>
-            <Drawer
-                open={isOpen}
-                onClose={toggleDrawer}
-                direction='left'
-                className='flex flex-col justify-between'
-            >
+                <Drawer
+                    open={isOpen}
+                    onClose={toggleDrawer}
+                    direction='left'
+                    className='flex flex-col justify-between'
+                >
                 <div className='flex flex-col'>
                     <div className='font-bold'>
                         LOGO

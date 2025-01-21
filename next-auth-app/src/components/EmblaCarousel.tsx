@@ -71,7 +71,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   return (
     <div className="embla">
       <div className="embla__viewport" ref={emblaRef} >
-        <div className="embla__container ">
+        <div className="embla__container  ">
           {slides.map((portfolio) => (
             <PortfolioDefilant portfolio={portfolio}/>
           ))}

@@ -70,7 +70,7 @@ export const MembersProvider: React.FC<{children: React.ReactDOM}> = ({children}
                 toast.success("Video ajouté")
 
             }catch(error){
-                console.log("erreur Lors de la creeation", error)
+                console.log("erreur Lors de la création", error)
             }
     
         
@@ -106,12 +106,41 @@ export const MembersProvider: React.FC<{children: React.ReactDOM}> = ({children}
         }
     }
 
+    const deleteAllvideo = async () =>{
+        try {
+            const promises = videos.map((docId) => deleteDoc(doc(db, "videos", docId.id)))
+            await Promise.all(promises)
+        }catch(error){
+            console.log("erreur Lors de la suppression", error)
+        }
+    }
+
+    const deleteSelecteVideo = async (listeSelecteDelete: string[]) =>{
+        try {   
+            const listeADelete: any[] =[]
+            listeSelecteDelete.forEach(item => {
+                videos.forEach(video => {
+                    if(video.titre === item){
+                        listeADelete.push(video.id)
+                    }
+                })
+            })
+            console.log(listeADelete)
+            const promises = listeADelete.map((docId) => deleteDoc(doc(db, "videos", docId)))
+            await Promise.all(promises)
+            
+        }catch(error){
+            console.log("erreur Lors de la suppression", error)
+        }
+    }
 
     const value = {
         videos,
         addVideo,
         updateVideo,
         deleteVideo,
+        deleteAllvideo,
+        deleteSelecteVideo,
     }
 
     return <MembersContext.Provider value={value}>{children}</MembersContext.Provider>

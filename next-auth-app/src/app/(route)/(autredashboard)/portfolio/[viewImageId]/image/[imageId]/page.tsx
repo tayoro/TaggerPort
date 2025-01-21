@@ -26,7 +26,7 @@ export default function Review({params}: { params : {
                         <div key={image.id}>
                             {image.numero == params.imageId && (<>
                                 
-                                    <div className='rounded-md w-[100%] h-screen bg-black px-52 py-6 border'>
+                                    <div className='rounded-md w-[100%] h-screen bg-black px-[70px] lg:px-52 py-6 border'>
                                         
                                             <img src={image.image} width={25} height={25} className='w-full h-full'/>
                                     

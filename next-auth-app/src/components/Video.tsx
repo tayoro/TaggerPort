@@ -11,11 +11,28 @@ import styles from "@/app/styles/pages/home.module.css"
 import * as moment from 'moment'
 
 
-export default function Video({video} : {video: DataType}) {
+export default function Video({video, videoSelectionner, setVideoSelectionner} : {video: DataType, videoSelectionner?: string[], setVideoSelectionner?:any}) {
 
     const {data: session} = useSession()
-    const {deleteVideo} = useFireBase()
+    const {videos, deleteVideo} = useFireBase()
     const router = useRouter()
+
+    const handleCheckboxChange = (e : any)=>{
+        const value = e.target.value
+
+        if (e.target.checked){
+            for(let i=0; i < videos.length; i++){
+                if(videos?.[i]?.titre === value){
+                    setVideoSelectionner([
+                        ...videoSelectionner,
+                        value  
+                    ])
+                }
+            }
+        }else{
+            setVideoSelectionner(videoSelectionner.filter(item => item !== value));
+        }
+    }
 
     const seconds = Math.floor((new Date() - video.date) / 1000);
     const interval = Math.floor(seconds / 86400);
@@ -88,14 +105,24 @@ export default function Video({video} : {video: DataType}) {
                             className="text-white text-[25px] bg-red-600  cursor-pointer rounded-md hover:w-9 hover:h-9 "/>
                         </div>
                     </>)}
+
+                    <input 
+                    type="checkbox" 
+                    value={video.titre}
+                    className="form-check-input absolute left-1 top-1 z-10"
+                    onChange={handleCheckboxChange} 
+                    />
+
+
                 <div className="w-[100%] h-[150px] rounded-[15px] md:w-[100%] overflow-hidden  ">
                     <video onClick={()=>{router.push(`dashboard/${video.titre.replaceAll(" ","-")}`)}}  autoPlay loop muted src={video.video} className='w-[100%] h-full object-cover cursor-pointer rounded-[5%] hover:scale-[1.1]'/>
-                    
                 </div>
+
                 <div className="w-[100%] h-[calc(100%-150px)]  p-[10px] bg-[#F2F2F2] relative z-[1] flex flex-col ">
                     <div onClick={()=>{router.push(`dashboard/${video.titre.replaceAll(" ","-")}`)}} className="mb-2 cursor-pointer">
                         <span className=''>{video.titre} </span>
                     </div>
+                    
                     <div className="flex justify-between pb-2">  
                         <span className=''>
                             {/* {new Date(Number(video.date?.seconds * 1000)).toLocaleDateString("en-US", {year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit",})}  */}

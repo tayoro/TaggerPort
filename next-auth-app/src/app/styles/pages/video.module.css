@@ -1,0 +1,24 @@
+
+
+
+@media only screen and (Max-width: 375px){
+    .cadreVideo{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .cadreLecteur{
+        height: 200px;
+    }
+}
+
+@media only screen and (Max-width: 425px){
+    .cadreVideo{
+        margin-left: 10px;
+        margin-right: 10px;
+        
+    }
+    .cadreLecteur{
+        height: 250px;
+        border: 10px rgb(18, 171, 51) solid;
+    }
+}

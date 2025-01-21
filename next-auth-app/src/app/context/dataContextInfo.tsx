@@ -109,12 +109,24 @@ export const InfoProvider: React.FC<{children: React.ReactDOM}> = ({children}) =
         }
     }
 
+    const deleteAllinfo = async () =>{
+        try {
+            const promises = infos.map((docId) => deleteDoc(doc(db, "infos", docId.id)))
+            await Promise.all(promises)
+        }catch(error){
+            console.log("erreur Lors de la suppression", error)
+        }
+    }
+
+    
+
 
     const value = {
         infos,
         addInfo,
         updateInfo,
         deleteInfo,
+        deleteAllinfo,
     }
 
     return <DataContextInfo.Provider value={value}>{children}</DataContextInfo.Provider>

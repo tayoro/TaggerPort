@@ -11,6 +11,15 @@ export type ModalType = {
     image?: any;
 }
 
+export type ModalDescribType = {
+    openModalDescrib: boolean;
+    onCloseDescrib: ()=> void;
+    onOpenDescrib?: ()=> void;
+    isUpdate?: boolean;
+    describ?: any[];
+
+}
+
 
 
 // va nous servire a recuperer les données dans firebase
@@ -59,22 +68,31 @@ export type DbContextType = {
     addVideo: (membersData: Omit<DataType, "id"> & {video: string}) => Promise<void>
     updateVideo: (member: DataType) => Promise<void>
     deleteVideo: (id: string) => Promise<void>
+    deleteAllvideo: () => Promise<void>
+    deleteSelecteVideo: (listeSelecteDelete: string[]) => Promise<void>
 
     infos: DataInfoType[]
     addInfo: (infosData: Omit<DataInfoType, "id">) => Promise<void>
     updateInfo: (member: DataInfoType) => Promise<void>
     deleteInfo: (id: string) => Promise<void>
+    deleteAllinfo: () => Promise<void>
+    deleteSelecteInfo: (listeSelecteDelete: string[]) => Promise<void>
 
     contacts: DataContactType[]
     addContact: (contactsData: Omit<DataContactType, "id">) => Promise<void>
     deleteContact: (id: string) => Promise<void>
+    deleteAllcontact: () => Promise<void>
+    deleteSelecteContact: (listeSelecteDelete: string[]) => Promise<void>
 
     portfolios: DataPortfolioType[]
     addPortfolio: (portfoliosData: Omit<DataPortfolioType, "id"> & {image: string} & {numero: any}) => Promise<void>
     updatePortfolio: (member: DataPortfolioType) => Promise<void>
-    deletePortfolio: (id: string) => Promise<void>
-    deletePortfolioMultiple : (titre: string) => Promise<void>
     addImagePortfolio: (portfoliosData: Omit<DataPortfolioType, "id"> & {image: string} & {numero: any} &{titre: any} & {desc:any}) => Promise<void>
+    deletePortfolio: (id: string) => Promise<void>
+    deleteAllportfolio: () => Promise<void>
+    deletePortfolioMultiple: (titre: string) => Promise<void>
+    deleteSelectePortfolio: (listeSelecteDelete: string[]) => Promise<void>
+    
 }
 
 // type pour les formulaires video
@@ -106,6 +124,7 @@ export type FormContactType = {
     message: string;
 }
 
+// type pour les formulaire portfolio
 export type FormPortfolioType = {
     titre: string;
     image?: string;
