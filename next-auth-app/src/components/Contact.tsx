@@ -3,15 +3,40 @@ import { useFireBaseContact } from '@/app/context/dataContextContact'
 import React from 'react'
 import { MdDelete } from "react-icons/md";
 
-export default function Contact({contact} : {contact: DataContactType}) {
+export default function Contact({contact, contactSelectionner, setContactSelectionner} : {contact: DataContactType,  contactSelectionner?: string[], setContactSelectionner?:any}) {
 
-    const {deleteContact} = useFireBaseContact()
+    const {contacts,deleteContact} = useFireBaseContact()
+    
+    const handleCheckboxChange = (e : any)=>{
+        
+        const value = e.target.value
+        if (e.target.checked){
+            for(let i=0; i < contacts.length; i++){
+                if(contacts?.[i]?.email === value){
+                    setContactSelectionner([
+                        ...contactSelectionner,
+                        value  
+                    ])
+                }
+            }
+        }else{
+            setContactSelectionner(contactSelectionner.filter(item => item !== value));
+        }
+    }
     return (
         <>
             <div className='flex gap-5 mb-3'>
                 <div className="collapse collapse-arrow bg-base-200">
                     <input type="radio" name="my-accordion-2" defaultChecked />
                     <div className="collapse-title text-xl font-medium flex gap-[50px] bg-[#aaaaaa]">
+                        <div className='relative border-r-[1px] border-[#2e2c2c] w-[30px]'>
+                        <input 
+                            type="checkbox" 
+                            value={contact.email}
+                            className="form-check-input absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-10 cursor-pointer"
+                            onChange={handleCheckboxChange} 
+                        />
+                        </div>
                         
                         <span>{contact.name}</span>
                     

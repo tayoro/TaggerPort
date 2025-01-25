@@ -3,8 +3,6 @@
 import SearchBar from '@/components/SearchBar'
 
 import React, { useEffect } from 'react'
-import { IoIosAddCircle } from 'react-icons/io'
-import useModal from '@/app/hooks/useModal'
 import { useState } from 'react'
 import { useFireBaseContact } from '@/app/context/dataContextContact'
 import Contact from '@/components/Contact'
@@ -13,8 +11,12 @@ import { toast } from 'react-toastify';
 
 
 export default async function MessagePage() {
-     
-    const {contacts, deleteAllcontact} = useFireBaseContact()
+
+    const {contacts, deleteAllcontact, deleteSelecteContact} = useFireBaseContact()
+    
+    const [contactSelectionner, setContactSelectionner] = useState<string[]>([])
+
+    const [activeSelecte, setActiveSelecte] = useState(true)
 
     const [active, setActive] = useState(true)
 
@@ -26,8 +28,16 @@ export default async function MessagePage() {
             setActive(false)
         }
 
-       
     },[contacts])
+
+    useEffect(()=>{
+        if(contactSelectionner.length < 1){
+            setActiveSelecte(true)
+        }
+        else{
+            setActiveSelecte(false)
+        }   
+    },[contactSelectionner])
 
     return (
         <div>
@@ -41,7 +51,7 @@ export default async function MessagePage() {
                         </div>
 
 
-                        <div className=" w-[100%] py-5 px-6">
+                        <div className=" w-[100%] py-5 px-6 flex gap-3">
                             <button type="button" onClick={ async() => {
                                     var resultat = confirm("Voulez vous supprimer tous les contacts ?")
                                     if(resultat === true ){
@@ -50,19 +60,29 @@ export default async function MessagePage() {
                                     }
                                 }} 
                             className={`bg-red-400 hover:bg-red-800 flex items-center justify-center px-2 rounded-md  ${active ? "opacity-5" : "opacity-[1]"}`} disabled={active}> Tous supprimer <MdDelete className='text-red-600'/></button>
-                        </div>
 
+
+                            <button type="button" onClick={ async() => {
+                                    var resultat = confirm("Voulez vous supprimer les portfolios selectionnés ?")
+                                    if(resultat === true ){
+                                        deleteSelecteContact(contactSelectionner)
+                                        toast.success("Portfolios supprimés")
+                                    }
+                                }} 
+                            className={`bg-red-400 hover:bg-red-800 flex items-center justify-center px-2 rounded-md  ${activeSelecte ? "opacity-5" : "opacity-[1]"}`} disabled={activeSelecte}> supprimer {contactSelectionner.length} <MdDelete className='text-red-600'/></button>
+                        </div>
+                        
                         
                         { contacts.length > 0 ? (
                             <>
-                                <div className=" overflow-hidden overflow-y-scroll h-[calc(100%-70px)] bg-[#FFF]">
+                                <div className=" overflow-hidden overflow-y-scroll h-[calc(100%-135px)] bg-[#FFF]">
                                 {contacts.map((contact) => (
-                                    <Contact key={contact.id} contact={contact}/>
+                                    <Contact key={contact.id} contact={contact} contactSelectionner={contactSelectionner} setContactSelectionner={setContactSelectionner}/>
                                 ))}
                                 </div>
                             </> 
                         ) : (
-                            <div className='grid place-items-center h-[calc(100%-70px)] border'>
+                            <div className='grid place-items-center h-[calc(100%-135px)] border'>
                                 <div className='text-[50px] text-[#a1a1a1]'> Aucun message reçu</div>
                             </div>
                         )}

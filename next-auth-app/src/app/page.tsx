@@ -113,7 +113,7 @@ export default function HomePage() {
         </div>
         <div className={`flex flex-col items-center justify-center `}>
           <div className={`${styles.info}  shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] mx-[40px] flex flex-col justify-center px-[50px] flex-wrap gap-3 py-1`}>
-            <div className="lg:px-[120px] px-4">
+            <div className=" px-4 ">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi quo ab tempore magni voluptatum fuga corporis ducimus velit, autem vel perspiciatis maiores excepturi nulla quibusdam temporibus aliquid nostrum, dicta consequuntur!
             </div>
             <div className=" flex justify-center flex-wrap gap-[50px] bg-gray-200 border text-black">
@@ -307,12 +307,12 @@ export default function HomePage() {
 
 {/* --------------------------------------------------------------------------------------- */}
       <section id="service" className="bg-[#efd9b0] service xl:h-screen mt-4 xl:mt-0 pb-4 text-[#ffffff] ">
-        <div className="h-[60px] flex justify-center items-center text-[30px] ">
+        <div className="h-[65px] flex justify-center items-center text-[30px] ">
           <span className="text-black">Service</span>
         </div>
-        <div className={` h-[calc(100%-100px)]  shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] flex justify-center items-center mx-[40px] flex-col gap-3 `}>
+        <div className={` h-[calc(100%-100px)]  shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] flex justify-center items-center mx-[40px] px-[50px] flex-col gap-3 `}>
           <div className=" text-black ">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque est doloribus officia excepturi nesciunt dolorum ipsum sint, tempore possimus veritatis error. Ut animi, corrupti ad quis distinctio voluptatibus aperiam enim?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque est doloribus officia excepturi nesciunt dolorum ipsum sint, tempore poss veritatis error. Ut animi, corrupti ad quis distinctio voluptatibus aperiam enim?
           </div>
 
           <div className=" xl:flex xl:justify-center xl:items-center pb-5  bg-[#d75c03] ">
@@ -394,9 +394,9 @@ export default function HomePage() {
             </div> 
           </div> */}
 
-          <div className="h-[calc(100%-60px)] flex flex-col items-center mx-[40px] ">
+          <div className="h-[calc(100%-60px)] flex flex-col items-center mx-[40px] px-[50px] ">
             <div className=" ">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque est doloribus officia excepturi nesciunt dolorum ipsum sint, tempore possimus veritatis error. Ut animi, corrupti ad quis distinctio voluptatibus aperiam enim?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque est doloribus officia excepturi nesciunt dolorum ipsum sint, tempore possim veritatis error. Ut animi, corrupti ad quis distinctio voluptatibus aperiam enim?
             </div>
             <div className="h-[100%] w-[100%] mt-5 lg:px-[80px] ">
               <EmblaCarousel slides={newPortfoliosTri} options={OPTIONS} />
@@ -414,11 +414,20 @@ export default function HomePage() {
                 <SearchBar search={search} SetSearch={SetSearch} /> 
             </div>
             <div className={`shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] xl:shadow-none  relative overflow-hidden overflow-y-scroll h-[calc(100%-130px)] `}>{/* overflow-hidden overflow-y-scroll h-[765px] */}
-                <div className={`${styles.card_video} flex pt-[20px] flex-wrap bg-[#F2F2F2] md:h-[100%] justify-center sm:justify-start`}> 
-                    {visibleVideos.map((video)=>(
+                
+                    
+                    {visibleVideos.length > 0 ? (
+                      <div className={`${styles.card_video} flex pt-[20px] flex-wrap bg-[#F2F2F2] h-[100%] justify-center sm:justify-start `}> 
+                        {visibleVideos.map((video)=>(
                         <Video key={video.id} video={video}/>
-                    ))}
-                </div>
+                        ))}
+                      </div>
+                    ):(
+                      <div className='grid place-items-center h-[100%] w-[100%] bg-[#F2F2F2]'>
+                        <div className='text-[50px] text-white'> Aucune video n'a été publié</div>
+                      </div>
+                    )}
+              
             </div>
       </div>
       </section>
@@ -428,7 +437,7 @@ export default function HomePage() {
         <div className="h-[60px] flex justify-center items-center text-[30px]">
             <span>Contacts</span>
         </div>
-        <div className="xl:h-[calc(100%-60px)] flex flex-col justify-center gap-3 mx-[40px] ">
+        <div className="xl:h-[calc(100%-60px)] flex flex-col justify-center gap-3 mx-[40px] px-[50px] ">
               <div className="">
                   <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil sit aliquid earum odio incidunt nostrum expedita amet dolorum. Autem quidem voluptatum excepturi ex similique eveniet quia voluptas ad laboriosam. Totam.</span>
               </div>

@@ -69,7 +69,7 @@ export const PortfoliosProvider: React.FC<{children: React.ReactDOM}> = ({childr
                 toast.success(`Telechargement de image ${portfoliosData.numero} reussi`)
                 
             }catch(error){
-                console.log("erreur Lors de la creeation", error)
+                console.log("erreur Lors de la creation", error)
             }
     }
 

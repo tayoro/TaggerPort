@@ -62,7 +62,7 @@ export default async function NewPage() {
                             className={`bg-red-400 hover:bg-red-800 flex items-center justify-center px-2 rounded-md  ${active ? "opacity-5" : "opacity-[1]"}`} disabled={active}> Tous supprimer <MdDelete className='text-red-600'/></button>
                         </div>
 
-                        <div className=" overflow-hidden overflow-y-scroll h-[calc(100%-70px)] bg-[#F2F2F2]">{/* overflow-hidden overflow-y-scroll h-[765px] */}
+                        <div className=" overflow-hidden overflow-y-scroll h-[calc(100%-135px)] bg-[#F2F2F2]">{/* overflow-hidden overflow-y-scroll h-[765px] */}
                             { infos.length > 0 ? (
 
                                 <div className=" flex pt-[20px] flex-wrap bg-[#F2F2F2] sm:justify-center "> 
@@ -72,7 +72,7 @@ export default async function NewPage() {
                                 </div>
                                 
                             ) : (
-                                <div className='grid place-items-center h-[calc(100%-70px)] border'>
+                                <div className='grid place-items-center h-[calc(100%-135px)] border'>
                                     <div className='text-[50px] text-[#a1a1a1]'> Vous n'avez publié aucune information</div>
                                 </div>
                             )}

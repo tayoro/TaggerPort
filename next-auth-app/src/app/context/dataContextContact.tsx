@@ -72,8 +72,6 @@ export const ContactProvider: React.FC<{children: React.ReactDOM}> = ({children}
             }catch(error){
                 console.log("erreur Lors de l'envoie du message ", error)
             }
-    
-        
     }
 
 
@@ -99,11 +97,32 @@ export const ContactProvider: React.FC<{children: React.ReactDOM}> = ({children}
         }
     }
 
+    const deleteSelecteContact = async (listeSelecteDelete: string[]) =>{
+        try {   
+            const listeADelete: any[] =[]
+            listeSelecteDelete.forEach(item => {
+                contacts.forEach(contact => {
+                    if(contact.email === item){
+                        listeADelete.push(contact.id)
+                    }
+                })
+            })
+            console.log(listeADelete)
+            const promises = listeADelete.map((docId) => deleteDoc(doc(db, "contacts", docId)))
+            await Promise.all(promises)
+            
+        }catch(error){
+            console.log("erreur Lors de la suppression", error)
+        }
+    }
+
+
     const value = {
         contacts,
         addContact,
         deleteContact,
         deleteAllcontact,
+        deleteSelecteContact,
     }
 
     return <DataContextContact.Provider value={value}>{children}</DataContextContact.Provider>

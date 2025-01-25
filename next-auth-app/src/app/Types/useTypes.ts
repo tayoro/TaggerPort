@@ -27,8 +27,8 @@ export type DataType = {
     id: string;
     titre: string;
     video?: string;
-    date : any;
-    desc: string;
+    date?: any;
+    desc?: string;
 }
 
 export type DataInfoType = {
@@ -58,7 +58,7 @@ export type DataPortfolioType = {
     id: string;
     titre: string;
     image : string;
-    date : any;
+    date? : any;
     desc?: string;
     numero? : any;
 }

@@ -7,7 +7,7 @@ import { validationShema } from "../app/schema/FormShema";
 import { useState, useEffect } from "react";
 import { useFireBase } from "../app/context/dataContext";
 //cela servira a envoyer l'image dans notre storage
-import {ref, uploadBytes, getDownloadURL, uploadBytesResumable} from "firebase/storage"
+import {ref, getDownloadURL, uploadBytesResumable} from "firebase/storage"
 import { storage } from "../app/db/firebaseConfig";
 import { toast } from "react-toastify";
 
@@ -22,6 +22,7 @@ export default function FormVideo({openModal, isUpdate, onClose, video}: ModalTy
 
     const [progress, setProgress] = useState<number>(0)
 
+    
     //activer le bouton d'envoie
     const [active, setActive] = useState(true)
 
@@ -62,6 +63,8 @@ export default function FormVideo({openModal, isUpdate, onClose, video}: ModalTy
         }
     },[openModal])
 
+
+    
     
     //soumettre le formaire
     const onSubmit: SubmitHandler<FormType> = async(formData) =>{
@@ -69,14 +72,12 @@ export default function FormVideo({openModal, isUpdate, onClose, video}: ModalTy
             let videoUrl = '';
             
             if(fileVideo){
-                //recupere la reference de l'image
+                //recupere la reference de la video
                 const videoRef = ref(storage, `videos/${fileVideo.name}`)
-                //Pour envoyer l'image
+                
+                //Pour envoyer la video
                 const uploadTask = uploadBytesResumable(videoRef, fileVideo)
                 
-                //Telecharger la video
-                videoUrl = await getDownloadURL(videoRef)
-
                 uploadTask.on(
                     "state_changed",
                     (snapshot : any) => {
@@ -86,10 +87,18 @@ export default function FormVideo({openModal, isUpdate, onClose, video}: ModalTy
                         setProgress(prog);
                     },
                     (error: any) => console.log(error),
-                    () => {
-                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                            console.log("File available at", downloadURL);
-                        });
+                    async() => {
+                        const videoUrl= await getDownloadURL(uploadTask.snapshot.ref)
+                        // verification de video, si la video exite ou pas 
+                        const found = videos.some(tuto => tuto.titre === formData.titre);
+                        if (!found) {
+                            addVideo({...formData, video: videoUrl})
+                            document.getElementById("formVideo").reset();
+                            //apres enregisterement on ferme le formulaire
+                            onClose();
+                        }else{
+                            toast.error("Ce tuto existe deja")
+                        }
                     }
                 );
                 
@@ -100,19 +109,10 @@ export default function FormVideo({openModal, isUpdate, onClose, video}: ModalTy
 
             if(isUpdate && video){
                 updateVideo({...formData, id: video.id , video: videoUrl})
-            }else{
-                
-                // verification de video
-                const found = videos.some(tuto => tuto.titre === formData.titre);
-                if (!found) {
-                    addVideo({...formData, video: videoUrl})
-                }else{
-                    toast.error("Ce tuto existe deja")
-                }
             }
             
             //on ferme le modal apres validation
-            onClose();
+            
 
         }catch(error){
             console.error("Erreur lors de l'ajout du formulaire")
@@ -126,18 +126,18 @@ export default function FormVideo({openModal, isUpdate, onClose, video}: ModalTy
         <div>
             {openModal && (
                 <div className="absolute top-0 left-0 z-40 grid h-screen w-full place-items-center backdrop-blur">
-                    <div className="max-w-[300px] sm:max-w-[700px] relative z-50 m-auto min-h-[200px] bg-white p-4 shadow-lg border border-gray-800 rounded-md">
+                    <div className={`${isUpdate && "sm:w-[600px]"} max-w-[300px] sm:max-w-[700px] relative z-50 m-auto min-h-[200px] bg-white p-4 shadow-lg border border-gray-800 rounded-md`}>
                         <div className="flex justify-end">
                             <IoIosClose className="self-end text-2xl cursor-pointer" onClick={onClose}/>
                         </div>
-                        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-1">
+                        <form id="formVideo" onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-1">
 
                                 <label htmlFor="titre">Titre</label>
                                 <input {...register("titre")} id="titre" className=" border border-gray-300 p-2 rounded-md"/>
                                 {errors.titre && <span className="text-red-500">{errors.titre.message}</span>}
 
                                 <label htmlFor="video">Video</label>
-                                <input onChange={handleChangeVideo} accept="video/mp4 video/x-m4v video/*" type="file" id="image" className="border border-gray-300 p-2 rounded-md"/>
+                                <input onChange={handleChangeVideo} accept="video/mp4 video/x-m4v video/*" type="file" id="image" className={`border border-gray-300 p-2 rounded-md ${isUpdate && "hidden"} `}/>
 
                                 <label htmlFor="desc">Description</label>
                                 <textarea {...register("desc")} id="desc" rows="5" placeholder="Petite description de la video...." className="border border-gray-300 p-2 rounded-md"> </textarea>
@@ -148,8 +148,11 @@ export default function FormVideo({openModal, isUpdate, onClose, video}: ModalTy
                                 </button>
                             </form>
 
-                        <div className={`"hidden"` }><progress value={progress} max="100" /> {progress}%</div>
-                    
+                        
+                            <div className={`w-[100%] mt-[2px] flex items-center relative ${isUpdate && "hidden"} }` }>
+                                <progress value={progress} max="100" className="w-[100%] h-[20px] "/> 
+                                <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-10 ">{progress}% </div>
+                            </div>
                     </div>
                 </div>
             )}

@@ -132,7 +132,7 @@ export default function PortfolioPage() {
                             { portfolios.length > 0 ? (
                                     
                                     <div className=''>
-                                        <div className= {`${styles.card_portfolio} flex pt-[20px] flex-wrap bg-[#F2F2F2] justify-center sm:justify-start border-[1px] border-red-400`}> 
+                                        <div className= {`${styles.card_portfolio} flex pt-[20px] flex-wrap bg-[#F2F2F2] justify-center sm:justify-start`}> 
                                             
                                             {visiblePortfolios.map((portfolio: any)=>( 
                                                         <Portfolio key={portfolio.id} portfolio={portfolio} imageSelectionner={imageSelectionner} setImageSelectionner={setImageSelectionner}/>

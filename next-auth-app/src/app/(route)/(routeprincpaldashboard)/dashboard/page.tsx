@@ -126,8 +126,7 @@ export default function DashboardPage() {
                             className={`bg-red-400 hover:bg-red-800 flex items-center justify-center px-2 rounded-md  ${active ? "opacity-5" : "opacity-[1]"}`} disabled={active}> Tous supprimer <MdDelete className='text-red-600'/></button>
                         </div>
                          */}
-
-
+                            
                         <div className=" overflow-hidden overflow-y-scroll h-[calc(100%-135px)] bg-[#F2F2F2]">{/* overflow-hidden overflow-y-scroll h-[765px] */}
                         
                         { videos.length > 0 ? (
@@ -141,7 +140,7 @@ export default function DashboardPage() {
                             </div>
 
                         ) : (
-                            <div className='grid place-items-center h-[calc(100%-70px)] border'>
+                            <div className='grid place-items-center h-[calc(100%-135px)] '>
                                 <div className='text-[50px] text-[#a1a1a1]'> Vous n'avez publié aucune video</div>
                             </div>
                         )}

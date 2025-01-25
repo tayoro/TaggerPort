@@ -70,8 +70,10 @@ export default function FormPortfolio({openModal, isUpdate, onClose, image}: Mod
         }
     },[openModal])
 
-    
-
+    // const randomNumber = (max: number, min: number):number =>{
+    //     return Math.floor(Math.random()*(max - min + 1)+ min); 
+    // }
+    // console.log(randomNumber)
     //soumettre le formaire
     const onSubmit: SubmitHandler<FormPortfolioType> = async(formData) =>{
         try{   
@@ -81,6 +83,7 @@ export default function FormPortfolio({openModal, isUpdate, onClose, image}: Mod
 
                 for (let i = 0; i < fileImages.length; i++) {
                     const fileImage = fileImages[i]
+                    //console.log(fileImage.name)
                      //recupere la reference de l'image
                     const imageRef = ref(storage, `portfolios/${fileImage.name}`)
                     //Pour envoyer l'image
@@ -104,15 +107,14 @@ export default function FormPortfolio({openModal, isUpdate, onClose, image}: Mod
                         (error: any) =>{ console.log(error)},
                         async() => {
                             const imageUrl = await getDownloadURL(uploadTask.snapshot.ref)
-                            
-                                // verifie si portfolio existe deja
-                                const found = portfolios.some(portfolio => portfolio.titre === formData.titre);
-                                if (!found) {
-                                    addPortfolio({...formData, image: imageUrl , numero: i+1})
-                                }else{
-                                    toast.error("portfolio existe deja")
-                                }
-
+                            // verifie si portfolio existe deja
+                            const found = portfolios.some(portfolio => portfolio.titre === formData.titre);
+                            if (!found) {
+                                addPortfolio({...formData, image: imageUrl , numero: i+1})
+                                onClose();
+                            }else{
+                                toast.error("portfolio existe deja")
+                            }
                             
                         }
                         );  
@@ -139,7 +141,6 @@ export default function FormPortfolio({openModal, isUpdate, onClose, image}: Mod
             //}
             //on ferme le modal apres validation
             // if(progress === 100){
-            onClose();
             // }
         }catch(error){
             console.error("Erreur lors de l'ajout du formulaire")
@@ -177,10 +178,21 @@ export default function FormPortfolio({openModal, isUpdate, onClose, image}: Mod
                                 
                             </form>
                             {/* <progress value={progress} max="100" className={`${progress < 100 ? "hidden" : "block"} w-full`}/> {progress}% */}
+                            
 
-                            {progress.map((progress, i) => (
-                                            <div key={i}>{fileImages?.[i]?.name}  {progress}%</div>
-                            ))}
+                            
+                                <div className={`overflow-hidden overflow-y-scroll w-[100%] mt-[2px] items-center h-[100px] ${isUpdate && "hidden"} }` }> 
+                                    <div className="flex flex-col gap-1">
+                                    {progress.map((progress, i) => (
+                                        <div id={i} className="w-[100%] h-[20px] relative">
+                                            <progress  value={progress} max="100" className="w-[100%] h-[20px] absolute "/>
+                                            <div className="absolute flex justify-between w-[100%] items-center px-2"> <div>{fileImages?.[i]?.name}</div>  <div>{progress}%</div>  </div> 
+                                        </div>    
+                                    ))}
+                                    </div>
+                                
+                                </div>
+                            
                     </div>
                 </div>
             )}
