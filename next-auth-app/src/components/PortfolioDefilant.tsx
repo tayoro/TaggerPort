@@ -15,9 +15,9 @@ export default function PortfolioDefilant({portfolio}:{portfolio: any}) {
 
     return (
         <>
-            <div className="embla__slide border w-[100px]" key={portfolio.id}>
+            <div className="embla__slide border border-red-600 w-[100px]" key={portfolio.id}>
                 <div className="embla__slide__number ">
-                    <img src={portfolio.image} alt="dp" className='w-[100%] h-[100%]'/>
+                    <img src={portfolio.image} alt="dp" className=' h-[100%]'/>
                     <div className="content">
                         <h1 className='card-title'>{portfolio.titre}</h1>
                         { listeElementSelectionner.length >1 ? (

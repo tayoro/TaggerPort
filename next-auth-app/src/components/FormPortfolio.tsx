@@ -125,7 +125,8 @@ export default function FormPortfolio({openModal, isUpdate, onClose, image}: Mod
 
             if(isUpdate && image ){
                 updatePortfolio({...formData, id: image.id , image: imageUrl})
-                console.log({...formData})
+                onClose();
+                //console.log({...formData})
             }
             // else{
                 
@@ -164,7 +165,7 @@ export default function FormPortfolio({openModal, isUpdate, onClose, image}: Mod
                                 <input {...register("titre")} id="titre" className="border border-gray-300 p-2 rounded-md"/>
                                 {errors.titre && <span className="text-red-500">{errors.titre.message}</span>}
 
-                                <label htmlFor="image">image</label>
+                                <label htmlFor="image">Image</label>
                                 <input onChange={handleChangeImage} multiple accept="video/mp4 video/x-m4v video/*" type="file" id="image" className={`border border-gray-300 p-2 rounded-md ${isUpdate && "hidden" }`}/>
 
                                 <label htmlFor="desc">Description</label>
@@ -174,8 +175,6 @@ export default function FormPortfolio({openModal, isUpdate, onClose, image}: Mod
                                 <button className={`text-white bg-gray-700 hover:bg-gray-900 rounded-md p-3   ${active ? "opacity-5" : "opacity-[1]"}`} disabled={active}>
                                     {isUpdate ? "Modifier  ": "Ajouter un portfolio "} 
                                 </button>
-
-                                
                             </form>
                             {/* <progress value={progress} max="100" className={`${progress < 100 ? "hidden" : "block"} w-full`}/> {progress}% */}
                             

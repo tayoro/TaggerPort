@@ -70,14 +70,14 @@ export default function HomePage() {
 
 
   return (
-    <div className="bg-[#82392f]">
+    <div onContextMenu={(e) => e.preventDefault()} className="bg-[#82392f]">
       <section id='home' className={`${styles.cadreHome}  home lg:h-screen bg-[#efd9b0]`}> {/*  bg-bannerImg bg-repeat bg-cover bg-bottom */}
         
-        <Header/>
+      <Header/>
         <div className="flex flex-col-reverse p-6 md:flex-row w-[100%] lg:h-screen ">
           <div className={`${styles.illustration} lg:w-[50%] flex justify-center items-center flex-col lg:px-0 `}>
-              <div className="grid place-items-start font-bold text-[50px] w-[100%] ">
-                <p className="font-serif lg:block flex justify-center flex-col text-[#841304] ">Docteur Tayoro Gérard</p>
+              <div className="grid place-items-center font-bold text-[50px] w-[100%] ">
+                <p className="font-serif lg:block flex justify-center flex-col text-[#841304]  ">Dr. Tayoro Gérard</p>
               </div>
               <div className="grid place-items-center mt-1  w-[100%]  ">
                 <p className="text-[20px] font-medium text-3xl font-serif italic">
@@ -99,8 +99,8 @@ export default function HomePage() {
               </div>
           </div>
           <div className="flex m-0 lg:w-[50%] items-end ">
-            <div className="h-[500px] flex items-center justify-center w-full ">
-              <Image priority={true}  src={monImg} width={250} height={250} alt="image" className={`${styles.imgProfile} h-[350px] w-[350px] object-cover rounded-[50%] border-[8px] border-[#841304]`}/>
+            <div className="h-[500px] flex items-end justify-center w-full pb-5 ">
+              <Image  onContextMenu={(e) => e.preventDefault()} priority={true}  src={monImg} width={250} height={250} alt="image" className={`${styles.imgProfile} h-[350px] w-[350px] object-cover rounded-[50%] border-[8px] border-[#841304]`}/>
             </div>
           </div>
         </div>
@@ -413,13 +413,13 @@ export default function HomePage() {
             <div className="w-1079 h-[70px] bg-[#FFFFFF]  flex justify-center items-center px-[23px]">
                 <SearchBar search={search} SetSearch={SetSearch} /> 
             </div>
-            <div className={`shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] xl:shadow-none  relative overflow-hidden overflow-y-scroll h-[calc(100%-130px)] `}>{/* overflow-hidden overflow-y-scroll h-[765px] */}
+            <div className={`shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] xl:shadow-none bg-[#F2F2F2]  relative overflow-hidden overflow-y-scroll h-[calc(100%-130px)] `}>{/* overflow-hidden overflow-y-scroll h-[765px] */}
                 
                     
                     {visibleVideos.length > 0 ? (
                       <div className={`${styles.card_video} flex pt-[20px] flex-wrap bg-[#F2F2F2] h-[100%] justify-center sm:justify-start `}> 
                         {visibleVideos.map((video)=>(
-                        <Video key={video.id} video={video}/>
+                        <Video key={video.id} video={video} />
                         ))}
                       </div>
                     ):(

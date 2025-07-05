@@ -17,6 +17,8 @@ import { useFireBaseInfo } from "@/app/context/dataContextInfo";
 import { cn } from "../../lib/utils"; 
 import { useRouter } from "next/navigation";
 
+import InfiniteScrollCarousel from '@/components/InfiniteScrollCarousel';
+
 
 export default function Header({}) {
     // activation de lien
@@ -182,11 +184,14 @@ export default function Header({}) {
     //     );
     // };
 
+   
 
     return (
         <>
-            <header ref={headerRef} className={` md:shadow-md shadow-none flex flex-col  w-[100%] fixed z-[2] md:h-auto bg-[#FFF] ${styles.header}`}>
-                
+            <header ref={headerRef} className={`  md:shadow-md shadow-none flex flex-col  w-[100%] fixed z-[2] md:h-auto bg-[#FFF] ${styles.header}`}>
+                    <div className="bg-[#FFF]">
+                        <InfiniteScrollCarousel />
+                    </div>
                     <div className="relative bg-[#FFF]">
                         {/* logo ici */}
                         {infos && (
@@ -211,7 +216,7 @@ export default function Header({}) {
                             </>
                             )
                         }
-                        <div className={`  flex justify-between items-start px-[20px] xl:px-[40px] ${ infos.length && "md:justify-end" } md:flex md:items-center w-full bg-[#FFF] md:h-[60px]`}>
+                        <div className={` flex justify-between items-start px-[20px] xl:px-[40px] ${ infos.length && "md:justify-end" } md:flex md:items-center w-full bg-[#FFF] md:h-[60px]`}>
                             <div className={` text-black grid place-items-center h-full w-[100px] ${ infos.length && "md:absolute top-0 left-0 md:w-[200px] bg-white" }`}>
                                 <Link href="/"> <Image priority={true}  src={logo} width={73} height={83} alt="image" className={` h-full w-full object-cover`}/></Link>
                             </div>
@@ -222,6 +227,7 @@ export default function Header({}) {
                     {/* </div> */}
                     
                     </div>
+                    
             </header>
         </>
     )

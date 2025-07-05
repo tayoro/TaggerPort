@@ -68,7 +68,7 @@ export default function Portfolio({portfolio, imageSelectionner, setImageSelecti
             />
             <div className="w-[100%] h-[calc(100%-150px)]  p-[10px] bg-[#FFF] relative z-[1] ">
                 <div onClick={()=>{router.push(`portfolio/${portfolio.titre.replaceAll(" ","-")}`)}} className="mb-5 cursor-pointer">
-                    <span className=''>{portfolio.titre}</span>
+                    <span className=''>{portfolio.titre?.charAt(0).toUpperCase()}{portfolio?.titre?.slice(1)}</span>
                 </div>
                 <div className="flex justify-between">  
                     {/* <span>

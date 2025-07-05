@@ -19,7 +19,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   const router = useRouter()
   const { slides, options } = props
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [
-    AutoScroll({ playOnInit: false })
+    AutoScroll({ playOnInit: true })
   ])
   const [isPlaying, setIsPlaying] = useState(false)
   

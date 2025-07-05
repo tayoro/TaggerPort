@@ -104,23 +104,25 @@ export default function Video({video, videoSelectionner, setVideoSelectionner} :
                             }} 
                             className="text-white text-[25px] bg-red-600  cursor-pointer rounded-md hover:w-9 hover:h-9 "/>
                         </div>
+
+                        <input 
+                            type="checkbox" 
+                            value={video.titre}
+                            className="form-check-input absolute left-1 top-1 z-10"
+                            onChange={handleCheckboxChange} 
+                        />
                     </>)}
 
-                    <input 
-                    type="checkbox" 
-                    value={video.titre}
-                    className="form-check-input absolute left-1 top-1 z-10"
-                    onChange={handleCheckboxChange} 
-                    />
+                    
 
 
                 <div className="w-[100%] h-[150px] rounded-[15px] md:w-[100%] overflow-hidden  ">
-                    <video onClick={()=>{router.push(`dashboard/${video.titre.replaceAll(" ","-")}`)}}  autoPlay loop muted src={video.video} className='w-[100%] h-full object-cover cursor-pointer rounded-[5%] hover:scale-[1.1]'/>
+                    <video onContextMenu={(e:any) => e.preventDefault()} onClick={()=>{router.push(`dashboard/${video.titre.replaceAll(" ","-")}`)}}  autoPlay loop muted src={video.video} className='w-[100%] h-full object-cover cursor-pointer rounded-[5%] hover:scale-[1.1]'/>
                 </div>
 
                 <div className="w-[100%] h-[calc(100%-150px)]  p-[10px] bg-[#F2F2F2] relative z-[1] flex flex-col ">
                     <div onClick={()=>{router.push(`dashboard/${video.titre.replaceAll(" ","-")}`)}} className="mb-2 cursor-pointer">
-                        <span className=''>{video.titre} </span>
+                        <span className=''>{video.titre?.charAt(0).toUpperCase()}{video.titre?.slice(1)} </span>
                     </div>
                     
                     <div className="flex justify-between pb-2">  

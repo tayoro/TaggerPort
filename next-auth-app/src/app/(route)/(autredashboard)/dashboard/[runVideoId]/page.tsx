@@ -19,16 +19,16 @@ export default function RunVideo({params}: {
   const {onOpen, openModal, onClose} = useModal()
 
   return (
-    <div className=' py-[20px] flex justify-center  px-[20px] sm:px-[40px]  lg:px-[220px]'>
+    <div onContextMenu={(e:any) => e.preventDefault()} className=' py-[20px] flex justify-center  px-[20px] sm:px-[40px]  lg:px-[220px]'>
       <div>
       {videos.map((video)=>(
             <div  className={` `} >
               {video.titre.replaceAll(" ", "-") === params.runVideoId && (<>
-                <div className={`${styles.cadreLecteur} bg-black rounded-[15px] `}>
-                    <video autoPlay controls loop muted src={video.video} className='w-[100%] h-full object-cover cursor-pointer rounded-lg '/>
+                <div className={`${styles.cadreLecteur} bg-black rounded-[15px] max-h-[500px] lg:w-[800px] `}>
+                    <video disablePictureInPicture controlsList="nodownload" onContextMenu={(e) => e.preventDefault()} autoPlay controls loop muted src={video.video} className='w-[100%] h-[480px] object-cover cursor-pointer rounded-lg '/>
                 </div>
                 <div className='titre my-3'>
-                    <span className='font-bold'>{video.titre}</span>
+                    <span className='font-bold'> {video.titre?.charAt(0).toUpperCase()}{video.titre?.slice(1)} </span>
                 </div>
                 <div className='my-3'>
                   <span>
@@ -37,7 +37,7 @@ export default function RunVideo({params}: {
                 </div>
                 <div className='bg-[#E4E4E4] h-32 py-4 px-10 rounded-[25px]'>
                   <p className='Commentaitre '>
-                    {video.desc}
+                    {video.desc?.charAt(0).toUpperCase()}{video.desc?.slice(1)}
                   </p>
                 </div>
                 { session && (<>

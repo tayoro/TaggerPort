@@ -33,7 +33,7 @@ export default function Nav({activeSection , navRef} : {activeSection: any, navR
     
     return (
         <>
-           <nav ref={navRef} className={`  absolute transition-all duration-500 ease-in lg:duration-0 left-0 w-full mt-7  lg:static lg:w-auto lg:mt-0 bg-[#b0b0b0] md:bg-[#fff]  z-[-1] lg:z-[0] lg:flex lg:items-center p-1 lg:h-[100%] ${isOpen ? infos.length ? "top-[88px] bg-[#b0b0b0]": 'top-[20px]': 'top-[-600px]'}  `}>  {/*   ${isOpen ? 'top-[-490px]': 'top-[20px]'} */}
+           <nav ref={navRef} className={` absolute transition-all duration-500 ease-in lg:duration-0 left-0 w-full mt-7  lg:static lg:w-auto lg:mt-0 bg-[#b0b0b0] md:bg-[#fff]  z-[-1] lg:z-[0] lg:flex lg:items-center p-1 lg:h-[100%] ${isOpen ? infos.length ? "top-[88px] bg-[#b0b0b0]": 'top-[20px]': 'top-[-600px]'}  `}>  {/*   ${isOpen ? 'top-[-490px]': 'top-[20px]'} */}
                 <ul className={`${styles.sousNav} flex lg:static bg-[#b0b0b0] md:bg-[#fff] flex-col lg:flex lg:items-center lg:flex-row gap-4 md:gap-5 text-[14px] `}>   {/*menu-nav ${navbarOpen ? styles.show_menu : ''} */}
                     {menuNav.map((item: any) => (
                         <li key={item.name}  className={`${isOpen && "top-[88px] bg-[#b0b0b0] md:bg-[#fff] "}`}>

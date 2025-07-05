@@ -109,6 +109,7 @@ export default function FormVideo({openModal, isUpdate, onClose, video}: ModalTy
 
             if(isUpdate && video){
                 updateVideo({...formData, id: video.id , video: videoUrl})
+                onClose();
             }
             
             //on ferme le modal apres validation
@@ -137,7 +138,7 @@ export default function FormVideo({openModal, isUpdate, onClose, video}: ModalTy
                                 {errors.titre && <span className="text-red-500">{errors.titre.message}</span>}
 
                                 <label htmlFor="video">Video</label>
-                                <input onChange={handleChangeVideo} accept="video/mp4 video/x-m4v video/*" type="file" id="image" className={`border border-gray-300 p-2 rounded-md ${isUpdate && "hidden"} `}/>
+                                <input onChange={handleChangeVideo} accept="video/mp4 video/x-m4v video/avi video/*" type="file" id="image" className={`border border-gray-300 p-2 rounded-md ${isUpdate && "hidden"} `}/>
 
                                 <label htmlFor="desc">Description</label>
                                 <textarea {...register("desc")} id="desc" rows="5" placeholder="Petite description de la video...." className="border border-gray-300 p-2 rounded-md"> </textarea>
