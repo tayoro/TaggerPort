@@ -22,6 +22,7 @@ export default async function DashboardLayout({children}: {children: React.React
     
     return (
         <>  
+        
             <NoSsr>
                 {/* <SidebarContextProvider> */}
                     
@@ -29,6 +30,7 @@ export default async function DashboardLayout({children}: {children: React.React
                             <Sidebar />
                                 {/* toutes page qui sont dans ce groupe with-auth-layout auront le mot Group AuthLayout */}
                                 {children}
+                                
                         
                 {/* </SidebarContextProvider> */}
             </NoSsr>

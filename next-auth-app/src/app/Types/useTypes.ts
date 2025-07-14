@@ -57,7 +57,7 @@ export type DataContactType = {
 export type DataPortfolioType = {
     id: string;
     titre: string;
-    image : string;
+    image: string 
     date? : any;
     desc?: string;
     numero? : any;

@@ -32,23 +32,89 @@ import FormConatct from "@/components/FormContact";
 import { useFireBasePortfolio } from "./context/dataContextPortfolio";
 import { any } from "zod";
 import Social from "@/components/Social";
-
-
+import ImageCarousel from "@/components/ImageCaroussel";
 
 
 export default function HomePage() {
 
+
+  // const [showPortfolioButton, setShowPortfolioButton] = useState(false);
+
+  // useEffect(() => {
+  //   // Détecter quand la section est visible
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       entries.forEach(entry => {
+  //         if (entry.isIntersecting) {
+  //           // Attendre 3 secondes après que la section soit visible
+  //           setTimeout(() => {
+  //             setShowPortfolioButton(true);
+  //           }, 3000); // 3 secondes
+  //         }
+  //       });
+  //     },
+  //     { threshold: 0.1 } // Quand 10% de la section est visible
+  //   );
+
+  //   const section = document.getElementById('portfolio');
+  //   observer.observe(section);
+
+  //   // Nettoyage du listener
+  //   return () => observer.disconnect();
+  // }, []);
+
+
+
+  const [showPortfolioButton, setShowPortfolioButton] = useState(false);
+  const [shakeButton, setShakeButton] = useState(false);
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              setShowPortfolioButton(true);
+
+              // Démarrer un intervalle qui active le shake toutes les 7 secondes
+              intervalId = setInterval(() => {
+                setShakeButton(true);
+                setTimeout(() => setShakeButton(false), 1000); // Shake pendant 1s
+              }, 7000);
+
+            }, 3000);
+          } else {
+            setShowPortfolioButton(false);
+            setShakeButton(false);
+            clearInterval(intervalId);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const section = document.getElementById('portfolio');
+    if (section) observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+      clearInterval(intervalId);
+    };
+  }, []);
+
+
+
+
   const OPTIONS: EmblaOptionsType = { loop: true }
   const SLIDE_COUNT = 10
   const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
-
   let contents = []
-
   const {videos} = useFireBase()
   const {portfolios} = useFireBasePortfolio()
-  
-
   const [search, SetSearch] = useState('')
+
   // filtrage de video
   const visibleVideos = videos.filter(video =>{
     if(search && !video.titre.includes(search)){
@@ -56,7 +122,6 @@ export default function HomePage() {
     }
     return true
   })
-
 
   // tri de d'un tableau d'object 
   const map: any = {};
@@ -68,26 +133,24 @@ export default function HomePage() {
   }); 
   const newPortfoliosTri = Object.values(map)
 
-
   return (
     <div onContextMenu={(e) => e.preventDefault()} className="bg-[#82392f]">
-      <section id='home' className={`${styles.cadreHome}  home lg:h-screen bg-[#efd9b0]`}> {/*  bg-bannerImg bg-repeat bg-cover bg-bottom */}
-        
-      <Header/>
-        <div className="flex flex-col-reverse p-6 md:flex-row w-[100%] lg:h-screen ">
+      <section id='home' className={`${styles.cadreHome}  home lg:h-screen bg-[rgb(43,41,51)]`}> {/*  bg-bannerImg bg-repeat bg-cover bg-bottom */}
+        <Header/>
+        <div id='presentation' className="flex flex-col-reverse p-6 md:flex-row w-[100%] lg:h-screen ">
           <div className={`${styles.illustration} lg:w-[50%] flex justify-center items-center flex-col lg:px-0 `}>
               <div className="grid place-items-center font-bold text-[50px] w-[100%] ">
-                <p className="font-serif lg:block flex justify-center flex-col text-[#841304]  ">Dr. Tayoro Gérard</p>
+                <p className="font-serif lg:block flex justify-center flex-col text-[rgb(49,237,255)]  ">Dr. Tayoro Gérard</p>
               </div>
               <div className="grid place-items-center mt-1  w-[100%]  ">
-                <p className="text-[20px] font-medium text-3xl font-serif italic">
+                <p className="text-[20px] font-medium text-3xl font-serif italic text-[rgb(34,193,195)]">
                     <NoSsr>
                       <Typewriter
                             options={{
                               strings: ['Infographiste', 'Enseignant chercheur', 'Expert consultant'],
                               autoStart: true,
                               loop: true,
-                            }}
+                            }}             
                         />
                     </NoSsr>
                 </p>
@@ -99,9 +162,12 @@ export default function HomePage() {
               </div>
           </div>
           <div className="flex m-0 lg:w-[50%] items-end ">
-            <div className="h-[500px] flex items-end justify-center w-full pb-5 ">
-              <Image  onContextMenu={(e) => e.preventDefault()} priority={true}  src={monImg} width={250} height={250} alt="image" className={`${styles.imgProfile} h-[350px] w-[350px] object-cover rounded-[50%] border-[8px] border-[#841304]`}/>
-            </div>
+
+
+          <div id='mes' className="h-[500px] flex items-end justify-center w-full pb-5 ">
+          {/* <Image  onContextMenu={(e) => e.preventDefault()} priority={true}  src={monImg} width={250} height={250} alt="image" className={` h-[350px] w-[350px] object-cover rounded-[50%] border-[#841304]`}/>                 ${styles.imgProfile} */}
+            <ImageCarousel />
+          </div>
           </div>
         </div>
       </section>
@@ -121,12 +187,10 @@ export default function HomePage() {
                 <span className=" font-bold text-[25px]">NAME</span>
                 <span className=" font-medium">TAYORO G. GERARD</span>
               </div>
-  
               <div className=" w-[323px] flex flex-col justify-center items-center h-[125px] bg-gray-200 rounded-md border ">
                 <span className="font-bold text-[20px]">GMAIL</span>
                 <span className="font-medium ">tayorog@gmail.com</span>
               </div>
-  
               <div className=" w-[323px] flex flex-col justify-center items-center h-[125px] bg-gray-200 rounded-md border ">
                 <span className="block font-bold text-[20px]">PHONE</span>
                 <span className="block font-medium">+225 0709803749</span>
@@ -162,9 +226,7 @@ export default function HomePage() {
         <div className={`${styles.cadreExperience} flex flex-col justify-center relative px-[50px]`}>
             <div className={`${styles.barreExperience} bg-red-400 w-[2px] absolute xl:block hidden 2xl:hidden`}>
             </div>
-
             <div className=" xl:h-[200px] py-[4px] xl:py-[2px] flex items-center ">
-
                 <div className="flex flex-col items-center justify-center">
                   <div className=" text-red-500 lg:hidden">
                         2045 - 2050
@@ -380,7 +442,7 @@ export default function HomePage() {
       </section>
 
 {/* --------------------------------------------------------------------------------------- */}
-      <section id="portfolio" className="bg-[#efd9b0] portfolio pb-4 lg:h-screen my-4 xl:my-0 ">
+      <section id="portfolio" className="bg-[#efd9b0] portfolio pb-4  xl:h-screen my-4 xl:my-0">
           <div className="h-[60px] flex justify-center items-center text-[30px] ">
               <span>Portfolio</span>
           </div>
@@ -394,14 +456,59 @@ export default function HomePage() {
             </div> 
           </div> */}
 
-          <div className="h-[calc(100%-60px)] flex flex-col items-center mx-[40px] px-[50px] ">
+          <div className="h-[calc(100%-60px)] flex flex-col items-center mx-[40px] px-[50px] relative ">
             <div className=" ">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque est doloribus officia excepturi nesciunt dolorum ipsum sint, tempore possim veritatis error. Ut animi, corrupti ad quis distinctio voluptatibus aperiam enim?
             </div>
             <div className="h-[100%] w-[100%] mt-5 lg:px-[80px] ">
               <EmblaCarousel slides={newPortfoliosTri} options={OPTIONS} />
             </div>
+
+
+            {/* <div  onClick={() => window.location.href = "/viewPortfolios"} 
+              className={`text-white m-5 lg:m-0  cursor-pointer xl:absolute bottom-2 
+              left-[-55px] p-2 xl:px-4 bg-[rgb(199,95,30)] rounded-2xl xl:w-72 xl:flex xl:justify-end  xl:rounded-r-2xl hover:bg-[rgb(150,59,2)] 
+              hover:bg-opacity-80 transition-all duration-1000 ease-in-out 
+              ${showPortfolioButton ? 'transform translate-x-0 opacity-100 animate-pulse' : 'transform translate-x-[-100%] opacity-0'} hover:animate-none`}>
+              
+              Visualisez tous mon portfolio
+            </div > */}
+
+
+            {/* Animation CSS dans une balise <style> */}
+            <style>
+                    {`
+                      @keyframes shake {
+                          0%, 100% { transform: translateX(0); }
+                          10% { transform: translateX(-8px); }
+                          20% { transform: translateX(8px); }
+                          30% { transform: translateX(-6px); }
+                          40% { transform: translateX(6px); }
+                          50% { transform: translateX(-4px); }
+                          60% { transform: translateX(4px); }
+                          70% { transform: translateX(-2px); }
+                          80% { transform: translateX(2px); }
+                          90% { transform: translateX(0); }
+                        }
+                    `}
+            </style>
+
+            <div
+              onClick={() => window.location.href = "/viewPortfolios"}
+              className={`
+                text-white m-5 lg:m-0 cursor-pointer xl:absolute bottom-2 
+                left-[-55px] p-2 xl:px-4 bg-[rgb(199,95,30)] rounded-2xl xl:w-72 xl:flex xl:justify-end  
+                xl:rounded-r-2xl hover:bg-[rgb(150,59,2)] hover:bg-opacity-80 
+                transition-all duration-1000 ease-in-out
+                ${showPortfolioButton ? 'translate-x-0 opacity-100 animate-pulse' : '-translate-x-full opacity-0'}
+                hover:animate-none
+              `}
+              style={shakeButton ? { animation: 'shake 1s ease-in-out' } : {}}
+            >
+                Visualisez tout mon portfolio
+            </div>
           </div>
+
       </section>
 
 {/* --------------------------------------------------------------------------------------- */}
@@ -439,7 +546,8 @@ export default function HomePage() {
         </div>
         <div className="xl:h-[calc(100%-60px)] flex flex-col justify-center gap-3 mx-[40px] px-[50px] ">
               <div className="">
-                  <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil sit aliquid earum odio incidunt nostrum expedita amet dolorum. Autem quidem voluptatum excepturi ex similique eveniet quia voluptas ad laboriosam. Totam.</span>
+                  <span> Vous souhaitez discuter d’un projet, d’une collaboration ou simplement poser une question ? 
+                  N’hésitez pas à me contacter via le formulaire ci-dessous. Je vous répondrai dans les plus brefs délais.</span>
               </div>
               <div className="">
                 <FormConatct />

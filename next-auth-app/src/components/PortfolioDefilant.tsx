@@ -15,7 +15,7 @@ export default function PortfolioDefilant({portfolio}:{portfolio: any}) {
 
     return (
         <>
-            <div className="embla__slide border border-red-600 w-[100px]" key={portfolio.id}>
+            <div className="embla__slide " key={portfolio.id}>
                 <div className="embla__slide__number ">
                     <img src={portfolio.image} alt="dp" className=' h-[100%]'/>
                     <div className="content">
